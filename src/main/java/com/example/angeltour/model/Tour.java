@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @ToString
 public class Tour {
+    private String countryName;
     private String[] neighbors;
     private int tourCounts;
     private Money leftover;

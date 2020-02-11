@@ -53,6 +53,7 @@ public class TourServiceImpl implements TourService {
         }
 
         return Tour.builder()
+                .countryName(homeCountry.getName())
                 .neighbors(neighbors)
                 .tourCounts(tourCounts)
                 .leftover(new Money(leftover, tourBudget.getCurrency()))
