@@ -82,9 +82,9 @@ class AngelTourApplicationTests {
 	@DisplayName("Test BG Tour")
 	@Test
 	void testBgTour() {
-		CountryMoney turCost = new CountryMoney("TUR", "Turkey",
+		CountryMoney expectedTryCost = new CountryMoney("TUR", "Turkey",
 				new Money(1317.9401f, "TRY"));
-		CountryMoney rouCost = new CountryMoney("ROU", "Romania",
+		CountryMoney expectedRonCost = new CountryMoney("ROU", "Romania",
 				new Money(953.26f, "RON"));
 
 		TourBudget tourBudget = new TourBudget("BGR", 100f, 1200f, "EUR");
@@ -93,8 +93,8 @@ class AngelTourApplicationTests {
 		assertEquals(2, tour.getTourCounts());
 		assertEquals(200, tour.getLeftover().getAmount());
 		assertEquals(5, tour.getNeighborCountryMoney().size());
-		assertTrue(tour.getNeighborCountryMoney().contains(turCost), "Incorrect cost for Turkey");
-		assertTrue(tour.getNeighborCountryMoney().contains(rouCost), "Incorrect cost for Romania");
+		assertTrue(tour.getNeighborCountryMoney().contains(expectedTryCost), "Incorrect cost for Turkey");
+		assertTrue(tour.getNeighborCountryMoney().contains(expectedRonCost), "Incorrect cost for Romania");
 	}
 
 }

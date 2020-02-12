@@ -37,9 +37,9 @@ public class TourServiceImpl implements TourService {
         List<CountryMoney> neighborCountryMoney = new ArrayList<>();
 
         if (neighbors.length > 0) {
-            float singleTour = tourBudget.getBudgetPerCountry() * neighbors.length;
-            tourCounts = (int)(tourBudget.getTotalBudget() / singleTour);
-            leftover = tourBudget.getTotalBudget() % singleTour;
+            float singleTourCost = tourBudget.getBudgetPerCountry() * neighbors.length;
+            tourCounts = (int)(tourBudget.getTotalBudget() / singleTourCost);
+            leftover = tourBudget.getTotalBudget() % singleTourCost;
             if (tourCounts > 0) {
                 neighborCountryMoney = getNeighborCountryMoney(
                         neighbors,
@@ -91,17 +91,13 @@ public class TourServiceImpl implements TourService {
         for (String neighborCode : neighbors) {
             Money countryCost = new Money(amountInBaseCurrency, baseCurrency);
             Country neighborCountry = countryService.fetchCountry(neighborCode);
-            try {
-                String[] neighborCurrencies = neighborCountry.getCurrencies();
-                if (neighborCurrencies != null && neighborCurrencies.length > 0) {
-                    String neighborCurrency = neighborCurrencies[0];
-                    Float neighborCurrencyRate = rates.get(neighborCurrency);
-                    if (neighborCurrencyRate != null) {
-                        countryCost = new Money(amountInBaseCurrency * neighborCurrencyRate, neighborCurrency);
-                    }
+            String[] neighborCurrencies = neighborCountry.getCurrencies();
+            if (neighborCurrencies != null && neighborCurrencies.length > 0) {
+                String neighborCurrency = neighborCurrencies[0];
+                Float neighborCurrencyRate = rates.get(neighborCurrency);
+                if (neighborCurrencyRate != null) {
+                    countryCost = new Money(amountInBaseCurrency * neighborCurrencyRate, neighborCurrency);
                 }
-            } catch (Exception e) {
-                logger.warn("Get currency rates error", e);
             }
 
             neighborCountryMoney.add(CountryMoney.builder()
