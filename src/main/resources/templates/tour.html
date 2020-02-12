@@ -1,15 +1,18 @@
-<h3>Angel Tour</h3>
-<a th:text="${tour.countryName}"/> has <a th:text="${#lists.size(tour.neighbors)}"/>
-neighbor countries (
-<a th:object="${tour.neighbors}">
-    <span th:each="n :${tour.neighbors}">
-    <a th:text="${n}"/>
-    </span>
+<h3><span th:text="${username}" /> Tour</h3>
+
+<a th:text="${tour.countryName}"/> has <a th:text="${#lists.size(tour.neighbors)}"/> neighbor countries
+<a th:unless="${#lists.isEmpty(tour.neighbors)}">
+    (<span th:each="neighbor : ${tour.neighbors}" th:text="${' ' + neighbor}" />)
 </a>
-) and Angel can travel around them <a th:text="${tour.tourCounts}"/> times. He will have
-<a th:text="${tour.leftover.amount}"/>  <a th:text="${tour.leftover.currencyCode}"/> leftover.
-<a th:object="${tour.neighborCountryMoney}">
-    <div th:each="nc :${tour.neighborCountryMoney}">
-        For <a th:text="${nc.countryName}"/> he will need to buy <a  th:text="${nc.tourMoney.amount}"/> <a  th:text="${nc.tourMoney.currencyCode}"/>.
+ and <span th:text="${username}" />
+ can travel around them <span th:text="${tour.tourCounts}" /> times.
+ He will have <span th:text="${tour.leftover.amount}" />
+<span th:text="${tour.leftover.currencyCode}" /> leftover.
+
+<a th:unless="${#lists.isEmpty(tour.neighborCountryMoney)}">
+    <div th:each="neighbor : ${tour.neighborCountryMoney}" >
+        For <span th:text="${neighbor.countryName}" />
+        he will need to buy <span th:text="${neighbor.tourMoney.amount}" />
+        <span th:text="${neighbor.tourMoney.currencyCode}" />.
     </div>
 </a>
